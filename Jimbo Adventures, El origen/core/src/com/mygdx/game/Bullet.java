@@ -43,6 +43,7 @@ public class Bullet {
 		fixDef.shape = shape;
 	
 		bullet = world.createBody(bulletDef);
+		//bullet.createFixture(fixDef);
 		bullet.setGravityScale(0);
 		
 		if(right) bullet.setLinearVelocity(VELOCITY_MAX, 0);

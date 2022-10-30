@@ -10,6 +10,8 @@ import com.mygdx.game.Item;
 import com.mygdx.game.JimboAdventures;
 import com.mygdx.game.Player;
 import com.mygdx.game.Superficies;
+import com.mygdx.game.Torreta;
+import com.mygdx.game.TorretasLevel;
 
 import Utils.Screens;
 
@@ -20,12 +22,14 @@ public class Level1 extends Screens {
 	private ClanSombra clan;
 	private Superficies sup;
 	private Consumibles consu;
+	private TorretasLevel torrlvl;
 	
-	public Level1(JimboAdventures game, World world, Superficies sup, ClanSombra clan, Consumibles consu) {
+	public Level1(JimboAdventures game, World world, Superficies sup, ClanSombra clan, Consumibles consu, TorretasLevel torrlvl) {
 		super(game);
 		this.consu = consu;
 		this.clan = clan;
 		this.sup = sup;
+		this.torrlvl = torrlvl;
 		world1 = world;
 		jimbo = new Player(new Texture("Parado.png"), world1);
 		
@@ -63,6 +67,7 @@ public class Level1 extends Screens {
 		getBatch().begin();
 		sup.draw(getBatch());
 		consu.draw(getBatch());
+		torrlvl.draw(getBatch());
 		clan.draw(getBatch());
 		jimbo.draw(getBatch());
 		getBatch().end();
@@ -75,6 +80,7 @@ public class Level1 extends Screens {
 	public void update(float delta) {
 		world1.step(delta, 8, 6);
 		clan.update(delta, world1);
+		torrlvl.update(delta, world1);
 		jimbo.update(delta, world1);
 	}
 

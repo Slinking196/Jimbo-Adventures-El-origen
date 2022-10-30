@@ -13,21 +13,42 @@ public class JimboAdventures extends Game {
 	private Consumibles consu;
 	private ClanSombra clan;
 	private Superficies sup;
+	private TorretasLevel torrlvl;
 	private World world;
 	
 	public void create() {
 		consu = new Consumibles();
 		clan = new ClanSombra();
+		torrlvl = new TorretasLevel();
 		sup = new Superficies();
 		world = new World(new Vector2(0, -9.8f), true);
 		try {
 			leerObstaculos("Csv\\Level1");
 			leerEnemigos("Csv\\Level1");
 			leerItems("Csv\\Level1");
+			leerTorretas("Csv\\Level1");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		setScreen(new Level1(this, world, sup, clan, consu));
+		setScreen(new Level1(this, world, sup, clan, consu, torrlvl));
+	}
+	
+	public void leerTorretas(String archivo) throws IOException {
+		BufferedReader csvTorretas = new BufferedReader(new FileReader(archivo + "\\torretas.csv"));
+		Torreta newTorreta;
+		String lineaTexto;
+		String valores[];
+		
+		lineaTexto = csvTorretas.readLine();
+		while((lineaTexto = csvTorretas.readLine()) != null) {
+			valores = lineaTexto.split(",");
+			newTorreta = new Torreta(new Texture("Torreta.png"), world,
+					Float.parseFloat(valores[0]), Float.parseFloat(valores[1]), Float.parseFloat(valores[2]),
+					Float.parseFloat(valores[3]), Float.parseFloat(valores[4]), valores[5]);
+			
+			torrlvl.agregarTorreta(newTorreta);
+		}
+		csvTorretas.close();
 	}
 	
 	public void leerItems(String archivo) throws IOException {
