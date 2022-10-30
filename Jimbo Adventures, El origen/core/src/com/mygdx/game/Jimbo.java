@@ -4,16 +4,21 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public class Jimbo {
-	private final float WIDTH = 0.2f;
-	private final float HEIGHT = 0.2f;
-	private final float DRAW_WIDTH = 0.4f;
-	private final float DRAW_HEIGHT = 0.4f;
-	private final float WALK_SPEED = 3f;
-	private final float JUMP_SPEED = 6f;
+	private float WIDTH = 0.2f;
+	private float HEIGHT = 0.2f;
+	private float DRAW_WIDTH = 0.4f;
+	private float DRAW_HEIGHT = 0.4f;
+	private float WALK_SPEED = 3f;
+	private float JUMP_SPEED = 6f;
 	
 	private boolean isJump;
 	private boolean isFalling;
 	private boolean isWalking;
+	
+	private boolean viewUp = false;
+	private boolean viewDown = false;
+	private boolean viewLeft = false;
+	private boolean viewRight = false;
 	
 	private boolean didJump;
 	
@@ -66,6 +71,50 @@ public class Jimbo {
 		
 		body.setLinearVelocity(velocidad);
 		stateTime += delta; 
+	}
+	
+	public void viewDown() {
+		viewDown = true;
+		viewUp = false;
+		viewLeft = false;
+		viewRight = false;
+	}
+	
+	public void viewUp() {
+		viewDown = false;
+		viewUp = true;
+		viewLeft = false;
+		viewRight = false;
+	}
+	
+	public void viewRight() {
+		viewDown = false;
+		viewUp = false;
+		viewLeft = false;
+		viewRight = true;
+	}
+	
+	public void viewLeft() {
+		viewDown = false;
+		viewUp = false;
+		viewLeft = true;
+		viewRight = false;
+	}
+	
+	public boolean getViewDown() {
+		return viewDown;
+	}
+	
+	public boolean getViewUp() {
+		return viewUp;
+	}
+	
+	public boolean getViewRight() {
+		return viewRight;
+	}
+	
+	public boolean getViewLeft() {
+		return viewLeft;
 	}
 	
 	public float getPosY() {
