@@ -18,7 +18,7 @@ public class Player {
 	private boolean viewUp = false;
 	private boolean viewDown = false;
 	private boolean viewLeft = false;
-	private boolean viewRight = false;
+	private boolean viewRight = true;
 	
 	private boolean didJump;
 	

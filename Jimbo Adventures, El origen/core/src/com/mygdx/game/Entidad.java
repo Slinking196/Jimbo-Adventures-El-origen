@@ -1,7 +1,5 @@
 package com.mygdx.game;
 
-
-
 public interface Entidad {
 	public void draw();
 	

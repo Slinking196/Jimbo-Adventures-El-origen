@@ -17,16 +17,15 @@ public abstract class Screens extends InputAdapter implements Screen {
 	private static final float SCREEN_HEIGTH = 1000.0f;
 	private static final float WORLD_WIDTH = 15.0f;
 	private static final float WORLD_HEIGTH = 10.5f;
-	private static final float PX_TO_METERS = 80.0f;
 	
-	private JimboAdventures test;
+	private JimboAdventures game;
 	private OrthographicCamera camUI;
 	private OrthographicCamera camBox2D;
 	private SpriteBatch batch;
 	private Stage stage;
 	
 	public Screens(JimboAdventures game) {
-		this.test = game;
+		this.game = game;
 		
 		stage =  new Stage(new StretchViewport(SCREEN_WIDTH, SCREEN_HEIGTH));
 		
@@ -54,6 +53,10 @@ public abstract class Screens extends InputAdapter implements Screen {
 		stage.draw();
 	}
 	
+	public JimboAdventures getGame() {
+		return game;
+	}
+	
 	public void resize(int width, int heigth) {
 		stage.getViewport().update(width, heigth, true);
 	}
@@ -77,8 +80,4 @@ public abstract class Screens extends InputAdapter implements Screen {
 	public abstract void draw(float delta);
 	
 	public abstract void update(float delta); 
-	
-	public float getPxToMeters() {
-		return PX_TO_METERS;
-	}
 }
