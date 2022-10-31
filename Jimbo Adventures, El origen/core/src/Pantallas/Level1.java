@@ -1,5 +1,6 @@
 package Pantallas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -13,6 +14,7 @@ import com.mygdx.game.Consumibles;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.Jimbo;
 import com.mygdx.game.JimboAdventures;
+import com.mygdx.game.Snake;
 import com.mygdx.game.Superficies;
 
 import com.mygdx.game.TorretasLevel;
@@ -27,6 +29,7 @@ public class Level1 extends Screens {
 	private Superficies sup;
 	private Consumibles consu;
 	private TorretasLevel torrlvl;
+	private Snake snk;
 	
 	public Level1(JimboAdventures game, World world, Superficies sup, ClanSombra clan, Consumibles consu, TorretasLevel torrlvl) {
 		super(game);
@@ -34,6 +37,7 @@ public class Level1 extends Screens {
 		this.clan = clan;
 		this.sup = sup;
 		this.torrlvl = torrlvl;
+		snk = new Snake(2,2, new Texture(Gdx.files.internal("Snake.png")), world);
 		world1 = world;
 		world.setContactListener(new Collision());
 		jimbo = new Jimbo(new Texture("Parado.png"), world1);
@@ -74,6 +78,7 @@ public class Level1 extends Screens {
 		consu.draw(getBatch());
 		torrlvl.draw(getBatch());
 		clan.draw(getBatch());
+		snk.draw(getBatch());
 		if(!jimbo.isDead()) jimbo.draw(getBatch());
 		getBatch().end();
 		

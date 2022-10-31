@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Obstaculo {
+public class Obstaculo implements Dibujable{
 	private float width;
 	private float height;
 	private int tipo;

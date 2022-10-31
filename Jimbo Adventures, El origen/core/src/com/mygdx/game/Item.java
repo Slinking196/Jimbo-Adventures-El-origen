@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
-public class Item {
+public class Item extends GameObjects{
 	private float width;
 	private float height;
 	private int tipo;
@@ -24,10 +24,10 @@ public class Item {
 		this.height = height;
 		itemImg = new TextureRegion(img);
 		
-		createItem(world, x, y);
+		createBody(x, y, world);
 	}
 	
-	private void createItem(World world, float x, float y) {
+	public void createBody(float x, float y, World world) {
 		BodyDef obstaculoDef = new BodyDef();
 		obstaculoDef.position.set(x, y);
 		obstaculoDef.type = BodyType.StaticBody;

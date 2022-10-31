@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Torreta {
+public class Torreta extends GameObjects{
 	private float width;
 	private float height;
 	
@@ -39,10 +39,10 @@ public class Torreta {
 		if(view.equals("RIGHT")) viewRight();
 		if(view.equals("LEFT")) viewLeft();
 		
-		createTorreta(world, x, y);
+		createBody(x, y, world);
 	}
 	
-	private void createTorreta(World world, float x, float y) {
+	public void createBody( float x, float y, World world) {
 		BodyDef torretaDef = new BodyDef();
 		torretaDef.position.set(x, y);
 		torretaDef.type = BodyType.StaticBody;

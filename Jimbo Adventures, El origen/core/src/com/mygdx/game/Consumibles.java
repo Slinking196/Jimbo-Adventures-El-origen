@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Consumibles {
+public class Consumibles implements Dibujable{
 	private ArrayList<Item> items;
 	
 	public Consumibles() {

@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Bullet {
+public class Bullet implements Dibujable{
 	private final float WIDTH = 0.2f;
 	private final float HEIGHT = 0.04f;
 	private final float VELOCITY_MAX = 10.0f;
@@ -31,10 +31,10 @@ public class Bullet {
 		this.left = left;
 		this.up = up;
 		this.down = down;
-		createBullet(x, y, world);
+		createBody(x, y, world);
 	}
 	
-	private void createBullet(float x, float y, World world) {
+	public void createBody(float x, float y, World world) {
 		BodyDef bulletDef = new BodyDef();
 		bulletDef.position.set(x, y);
 		bulletDef.type = BodyType.DynamicBody;

@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Caballero {
+public class Caballero extends GameObjects{
 	private float limitSupX;
 	private float limitInfX;
 	
@@ -25,12 +25,12 @@ public class Caballero {
 		this.limitSupX = limitSupX;
 		caballeroImg = new TextureRegion(img);
 		caballero = new Enemigo(x, y, accelX);
-		createBody(world);
+		createBody(caballero.getPosX(), caballero.getPosY(), world);
 	}
 	
-	private void createBody(World world) {
+	public void createBody(float x, float y, World world) {
 		BodyDef caballeroDef = new BodyDef();
-		caballeroDef.position.set(caballero.getPosX(), caballero.getPosY());
+		caballeroDef.position.set(x, y);
 		caballeroDef.type = BodyType.DynamicBody;
 		
 		PolygonShape shape = new PolygonShape();

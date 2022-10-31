@@ -38,6 +38,13 @@ public class Collision implements ContactListener {
 			enemigo.hit();
 			bull.setHit(true);
 		}
+		if(bodyB.getUserData() instanceof Bullet && bodyA.getUserData() instanceof Tail) {
+			Bullet bull = (Bullet) bodyB.getUserData();
+			Tail tail = (Tail) bodyA.getUserData();
+			
+			tail.hit();
+			bull.setHit(true);
+		}
 		
 	}
 

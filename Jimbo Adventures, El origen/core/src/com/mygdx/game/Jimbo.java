@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Jimbo {
+public class Jimbo extends GameObjects {
 	private boolean hit;
 	private boolean isDead = false;
 	private Arsenal balas;
@@ -23,14 +23,14 @@ public class Jimbo {
 	
 	public Jimbo(Texture img, World world) {
 		jimboImg = new TextureRegion(img);
-		player = new Player(0.2f,1.0f);
+		player = new Player(-6.5f,2.0f);
 		balas = new Arsenal();
-		createPlayer(world);
+		createBody(-6.5f, 2.0f, world);
 	}
 	
-	private void createPlayer(World world) {
+	public void createBody(float x, float y, World world) {
 		BodyDef jimboDef = new BodyDef();
-		jimboDef.position.set(player.getPosX(), player.getPosY());
+		jimboDef.position.set(x, y);
 		jimboDef.type = BodyType.DynamicBody;
 		
 		PolygonShape shape = new PolygonShape();
