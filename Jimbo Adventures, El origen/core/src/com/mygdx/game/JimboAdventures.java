@@ -22,6 +22,7 @@ public class JimboAdventures extends Game {
 		torrlvl = new TorretasLevel();
 		sup = new Superficies();
 		world = new World(new Vector2(0, -9.8f), true);
+		
 		try {
 			leerObstaculos("Csv\\Level1");
 			leerEnemigos("Csv\\Level1");
@@ -30,6 +31,7 @@ public class JimboAdventures extends Game {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		setScreen(new Level1(this, world, sup, clan, consu, torrlvl));
 	}
 	

@@ -23,6 +23,10 @@ public class Arsenal {
 		balas.add(newBullet);
 	}
 	
+	public void removeBala(Bullet bala) {
+		balas.remove(bala);
+	}
+	
 	public void draw(SpriteBatch batch) {
 		Bullet aux;
 		
@@ -30,5 +34,18 @@ public class Arsenal {
 			aux = balas.get(i);
 			aux.draw(batch);
 		}
+	}
+
+	public void agregarBala(Texture img, World world, float x, float y, float width, float height,
+			boolean viewRight, boolean viewLeft, boolean viewUp, boolean viewDown) {
+		Bullet newBullet;
+		
+		if(viewRight) newBullet = new Bullet(img, world, x + width + 0.1f, y + height / 2.0f, viewRight, viewLeft, viewUp, viewDown);
+		else if(viewLeft) newBullet = new Bullet(img, world, x - width / 2.0f - 0.1f, y, viewRight, viewLeft, viewUp, viewDown);
+		else if(viewUp) newBullet = new Bullet(img, world, x, y + height + 0.1f, viewRight, viewLeft, viewUp, viewDown);
+		else newBullet = new Bullet(img, world, x, y - 0.1f, viewRight, viewLeft, viewUp, viewDown);
+		
+		balas.add(newBullet);
+		
 	}
 }

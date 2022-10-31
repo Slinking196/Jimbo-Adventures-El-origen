@@ -1,5 +1,12 @@
 package com.mygdx.game;
 
-public abstract class Entidad {
 
+
+public interface Entidad {
+	public void draw();
+	
+	public void update();
+	
+	public void createBody();
+	
 }

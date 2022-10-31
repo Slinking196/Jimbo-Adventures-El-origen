@@ -57,7 +57,7 @@ public class Torreta {
 		
 		torreta = world.createBody(torretaDef);
 		torreta.createFixture(fixDef);
-		torreta.setGravityScale(0);
+		torreta.setUserData(this);
 		
 		shape.dispose();
 	}

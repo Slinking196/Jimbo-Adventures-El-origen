@@ -1,147 +1,99 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class Jimbo {
-	private float WIDTH = 0.2f;
-	private float HEIGHT = 0.2f;
-	private float DRAW_WIDTH = 0.4f;
-	private float DRAW_HEIGHT = 0.4f;
-	private float WALK_SPEED = 3f;
-	private float JUMP_SPEED = 6f;
+	private boolean hit;
+	private boolean isDead = false;
+	private Arsenal balas;
+	private Player player;
+	private Body jimboBody;
+	private TextureRegion jimboImg;
 	
-	private boolean isJump;
-	private boolean isFalling;
-	private boolean isWalking;
-	
-	private boolean viewUp = false;
-	private boolean viewDown = false;
-	private boolean viewLeft = false;
-	private boolean viewRight = false;
-	
-	private boolean didJump;
-	
-	private float stateTime = 0;
-	
-	private Vector2 pos;
-	private Vector2 velocidad;
-	
-	public Jimbo(float x, float y) {
-		pos =  new Vector2(x, y);
+	public Jimbo(Texture img, World world) {
+		jimboImg = new TextureRegion(img);
+		player = new Player(0.2f,1.0f);
+		balas = new Arsenal();
+		createPlayer(world);
 	}
 	
-	public void update(Body body, float delta, float accelX) {
-		pos = body.getPosition();
-		velocidad = body.getLinearVelocity();
+	private void createPlayer(World world) {
+		BodyDef jimboDef = new BodyDef();
+		jimboDef.position.set(player.getPosX(), player.getPosY());
+		jimboDef.type = BodyType.DynamicBody;
 		
-		if(didJump) {
-			didJump = false;
-			isJump = true;
-			stateTime = 0;
-			velocidad.y = JUMP_SPEED;
-		}
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(player.getWidth(), player.getHeight());
 		
-		if(accelX == -1) {
-			velocidad.x = -WALK_SPEED;
-			isWalking = !isJump && !isFalling;
-		}
-		else if(accelX == 1) {
-			velocidad.x = WALK_SPEED;
-			isWalking = !isJump && !isFalling;
-		} 
-		else {
-			velocidad.x = 0;
-			isWalking = false;
-		}
+		FixtureDef fixDef = new FixtureDef();
+		fixDef.shape = shape;
+		fixDef.density = 15f;
 		
-		if(isJump) {
-			if(velocidad.y <= 0) {
-				isJump = false;
-				isFalling = true;
-				stateTime = 0;
-			}
-		} 
-		else if(isFalling) {
-			if(velocidad.y >= 0) {
-				isFalling = false;
-				stateTime = 0;
-			}
-		}
+		jimboBody = world.createBody(jimboDef);
+		jimboBody.createFixture(fixDef);
+		jimboBody.setUserData(this);
 		
-		body.setLinearVelocity(velocidad);
-		stateTime += delta; 
+		shape.dispose();
 	}
 	
-	public void viewDown() {
-		viewDown = true;
-		viewUp = false;
-		viewLeft = false;
-		viewRight = false;
-	}
-	
-	public void viewUp() {
-		viewDown = false;
-		viewUp = true;
-		viewLeft = false;
-		viewRight = false;
-	}
-	
-	public void viewRight() {
-		viewDown = false;
-		viewUp = false;
-		viewLeft = false;
-		viewRight = true;
-	}
-	
-	public void viewLeft() {
-		viewDown = false;
-		viewUp = false;
-		viewLeft = true;
-		viewRight = false;
-	}
-	
-	public boolean getViewDown() {
-		return viewDown;
-	}
-	
-	public boolean getViewUp() {
-		return viewUp;
-	}
-	
-	public boolean getViewRight() {
-		return viewRight;
-	}
-	
-	public boolean getViewLeft() {
-		return viewLeft;
-	}
-	
-	public float getPosY() {
-		return pos.y;
-	}
-	
-	public float getPosX() {
-		return pos.x;
-	}
-	
-	public float getDrawHeigth() {
-		return DRAW_HEIGHT;
-	}
-	public float getDrawWidth() {
-		return DRAW_WIDTH;
-	}
-	public float getHeight() {
-		return HEIGHT;
-	}
-	
-	public float getWidth() {
-		return WIDTH;
-	}
-	
-	public void jump() {
-		if(!isJump && !isFalling) {
-			didJump = true;
+	public void update(float delta, World world) {
+		float accelX = 0;
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+			player.viewLeft();
+			accelX = -1;
 		}
+		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+			player.viewRight();
+			accelX = 1;
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.W)) player.viewUp();
+		if(Gdx.input.isKeyPressed(Input.Keys.S)) player.viewDown();
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) player.jump();
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) 
+			balas.agregarBala(new Texture("Bala.png"), world, jimboBody.getPosition().x, jimboBody.getPosition().y, player.getWidth(), player.getHeight(),
+								player.getViewRight(), player.getViewLeft(), player.getViewUp(), player.getViewDown());
+		
+		player.update(jimboBody, delta, accelX);
+		jimboBody.setTransform(jimboBody.getPosition(), 0);
 	}
-}
+	
+	public void removeBullet(Bullet bala) {
+		balas.removeBala(bala);
+	}
+	
+	public void dead() {
+		isDead = true;
+	}
+	
+	public boolean isDead() {
+		return isDead;
+	}
+	
+	public void setHit(boolean hit) {
+		this.hit = hit;
+	}
+	
+	public boolean getHit() {
+		return hit;
+	}
+	
+	public void draw(SpriteBatch batch) {
+		Vector2 pos = jimboBody.getPosition();
+		
+		balas.draw(batch);
+		batch.draw(jimboImg, pos.x - 0.2f, pos.y - 0.2f, .2f, 0.2f, player.getDrawWidth(), player.getDrawHeigth(), 1, 1, 0);
+	}
+ }
+

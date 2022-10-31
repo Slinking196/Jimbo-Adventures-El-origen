@@ -15,10 +15,13 @@ public class Bullet {
 	private final float WIDTH = 0.2f;
 	private final float HEIGHT = 0.04f;
 	private final float VELOCITY_MAX = 10.0f;
+	
 	private boolean right;
 	private boolean left;
 	private boolean up;
 	private boolean down;
+	private boolean hit = false;
+	
 	private Body bullet;
 	private TextureRegion bulletImg;
 	
@@ -37,14 +40,16 @@ public class Bullet {
 		bulletDef.type = BodyType.DynamicBody;
 		
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(WIDTH / 2, HEIGHT / 2);
+		if(right || left) shape.setAsBox(WIDTH / 2, HEIGHT / 2);
+		if(down || up) shape.setAsBox(HEIGHT / 2, WIDTH / 2);
 		
 		FixtureDef fixDef = new FixtureDef();
 		fixDef.shape = shape;
 	
 		bullet = world.createBody(bulletDef);
-		//bullet.createFixture(fixDef);
+		bullet.createFixture(fixDef);
 		bullet.setGravityScale(0);
+		bullet.setUserData(this);
 		
 		if(right) bullet.setLinearVelocity(VELOCITY_MAX, 0);
 		if(left) bullet.setLinearVelocity(-VELOCITY_MAX, 0);
@@ -61,5 +66,13 @@ public class Bullet {
 		if(up) batch.draw(bulletImg, pos.x - WIDTH / 2.0f, pos.y - HEIGHT / 2.0f, WIDTH / 2.0f, HEIGHT / 2.0f, WIDTH, HEIGHT, 1, 1, 90);
 		if(left) batch.draw(bulletImg, pos.x - WIDTH / 2.0f, pos.y - HEIGHT / 2.0f, WIDTH / 2.0f, HEIGHT / 2.0f, WIDTH, HEIGHT, 1, 1, 180);
 		if(down) batch.draw(bulletImg, pos.x - WIDTH / 2.0f, pos.y - HEIGHT / 2.0f, WIDTH / 2.0f, HEIGHT / 2.0f, WIDTH, HEIGHT, 1, 1, 270);
+	}
+
+	public void setHit(boolean hit) {
+		this.hit = hit;
+	}
+	
+	public boolean getHit() {
+		return hit;
 	}
 }

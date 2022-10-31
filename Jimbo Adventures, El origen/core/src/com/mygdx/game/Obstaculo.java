@@ -40,6 +40,7 @@ public class Obstaculo {
 		
 		obstaculo = world.createBody(obstaculoDef);
 		obstaculo.createFixture(fixDef);
+		obstaculo.setUserData(this);
 		
 		shape.dispose();
 	}

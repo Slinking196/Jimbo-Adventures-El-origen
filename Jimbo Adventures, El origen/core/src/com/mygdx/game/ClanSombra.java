@@ -23,6 +23,10 @@ public class ClanSombra {
 		caballeros.add(newCaballero);
 	}
 	
+	public void removeGuardian(Caballero cab) {
+		caballeros.remove(cab);
+	}
+	
 	public void update(float delta, World world) {
 		Caballero aux;
 		

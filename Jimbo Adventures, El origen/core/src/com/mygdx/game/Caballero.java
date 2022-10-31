@@ -15,6 +15,7 @@ public class Caballero {
 	private float limitSupX;
 	private float limitInfX;
 	
+	private boolean hit;
 	private Enemigo caballero;
 	private Body caballeroBody;
 	private TextureRegion caballeroImg;
@@ -41,13 +42,14 @@ public class Caballero {
 		
 		caballeroBody = world.createBody(caballeroDef);
 		caballeroBody.createFixture(fixDef);
+		caballeroBody.setUserData(this);
 		
 		shape.dispose();
 	}
 	
 	public void update(float delta, World world) {
 		Vector2 pos = caballeroBody.getPosition();
-		Vector2 v = caballeroBody.getLinearVelocity();
+
 		float accelX = caballero.getAccelX();
 		
 		if(pos.x <= limitInfX) {
@@ -58,7 +60,14 @@ public class Caballero {
 		}
 		
 		caballero.update(caballeroBody, delta, accelX);
-		
+	}
+	
+	public boolean getHit() {
+		return hit;
+	}
+	
+	public void hit() {
+		hit = true;
 	}
 	
 	public void draw(SpriteBatch batch) {
