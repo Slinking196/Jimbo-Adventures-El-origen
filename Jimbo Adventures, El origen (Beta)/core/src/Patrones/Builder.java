@@ -15,6 +15,6 @@ public interface Builder {
 	public void setTorretas(TorretasLevel torretas);
 	public void setWorld(World world);
 	public void setFondo(Texture img);
-	public void setJimbo(Jimbo jimbo);
+	public void setJimbo(Jimbo jimbo, float x, float y);
 	public void setGame(JimboAdventures game);
 }

@@ -24,7 +24,6 @@ public abstract class Screens extends InputAdapter implements Screen {
 	private Stage stage;
 	
 	public Screens(JimboAdventures game) {
-		System.out.println("xd2");
 		this.game = game;
 		
 		stage =  new Stage(new StretchViewport(SCREEN_WIDTH, SCREEN_HEIGTH));

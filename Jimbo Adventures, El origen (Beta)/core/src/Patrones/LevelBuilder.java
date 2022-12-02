@@ -20,8 +20,9 @@ public class LevelBuilder implements Builder {
 	private TextureRegion fondo;
 	
 	@Override
-	public void setJimbo(Jimbo jimbo) {
+	public void setJimbo(Jimbo jimbo, float x, float y) {
 		this.jimbo = jimbo;
+		this.jimbo.setInitPos(x, y);
 	}
 	
 	@Override

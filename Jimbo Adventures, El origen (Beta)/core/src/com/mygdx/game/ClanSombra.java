@@ -41,7 +41,6 @@ public class ClanSombra {
 		
 		for(int i = 0; i < caballeros.size(); i++) {
 			aux = caballeros.get(i);
-			System.out.println("xd");
 			aux.update(delta, world);
 		}
 	}

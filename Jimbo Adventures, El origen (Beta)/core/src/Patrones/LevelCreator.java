@@ -22,7 +22,7 @@ public class LevelCreator {
 		builder.setWorld(new World(new Vector2(0,-13f), true));
 		builder.setFondo(new Texture("Paisaje 1.png"));
 		builder.setGame(game);
-		builder.setJimbo(Jimbo.getInstance(new Texture("Parado.png"), -6.5f, 2.0f));
+		builder.setJimbo(Jimbo.getInstance(new Texture("Parado.png"), -6.5f, 2.0f), -6.5f, 2.0f);
 		try {
 			builder.setConsumibles(leerItems("Csv\\Level1"));
 			builder.setClanSombra(leerEnemigos("Csv\\\\Level1"));
@@ -34,7 +34,7 @@ public class LevelCreator {
 		}
 	}
 	
-	/*public void createLevel2(Builder builder, JimboAdventures game) {
+	public void createLevel2(Builder builder, JimboAdventures game) {
 		try {
 			builder.setConsumibles(leerItems("Csv\\Level2"));
 			builder.setClanSombra(leerEnemigos("Csv\\\\Level2"));
@@ -80,7 +80,7 @@ public class LevelCreator {
 		builder.setWorld(new World(new Vector2(0,-13f), true));
 		builder.setFondo(new Texture("Paisaje 1.png"));
 		builder.setGame(game);
-	}*/
+	}
 	
 	public TorretasLevel leerTorretas(String archivo) throws IOException {
 		BufferedReader csvTorretas = new BufferedReader(new FileReader(archivo + "\\torretas.csv"));

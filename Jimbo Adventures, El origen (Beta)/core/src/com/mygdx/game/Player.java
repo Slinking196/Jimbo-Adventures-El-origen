@@ -37,7 +37,6 @@ public class Player extends Entidad {
 		
 		velocidad = getVelocidad();
 		
-		System.out.println(isWalking);
 		if(didJump) {
 			didJump = false;
 			isJump = true;
