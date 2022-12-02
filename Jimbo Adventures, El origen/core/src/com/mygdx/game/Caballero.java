@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Caballero extends GameObjects{
+public class Caballero {
 	private float limitSupX;
 	private float limitInfX;
 	
@@ -19,27 +19,34 @@ public class Caballero extends GameObjects{
 	private Enemigo caballero;
 	private Body caballeroBody;
 	private TextureRegion caballeroImg;
+	private BodyDef caballeroDef;
+	private PolygonShape shape;
+	private FixtureDef fixDef;
 	
-	public Caballero(Texture img, World world, float x, float y, float accelX, float limitInfX, float limitSupX) {
+	
+	public Caballero(Texture img, float x, float y, float accelX, float limitInfX, float limitSupX) {
 		this.limitInfX = limitInfX;
 		this.limitSupX = limitSupX;
 		caballeroImg = new TextureRegion(img);
 		caballero = new Enemigo(x, y, accelX);
-		createBody(caballero.getPosX(), caballero.getPosY(), world);
+		createBody();
 	}
 	
-	public void createBody(float x, float y, World world) {
-		BodyDef caballeroDef = new BodyDef();
-		caballeroDef.position.set(x, y);
+	private void createBody() {
+		caballeroDef = new BodyDef();
+		caballeroDef.position.set(caballero.getPosX(), caballero.getPosY());
 		caballeroDef.type = BodyType.DynamicBody;
 		
-		PolygonShape shape = new PolygonShape();
+		shape = new PolygonShape();
 		shape.setAsBox(caballero.getWidth(), caballero.getHeight());
 		
-		FixtureDef fixDef = new FixtureDef();
+		fixDef = new FixtureDef();
 		fixDef.shape = shape;
 		fixDef.density = 15.0f;
 		
+	}
+	
+	public void setCaballeroWorld(World world) {
 		caballeroBody = world.createBody(caballeroDef);
 		caballeroBody.createFixture(fixDef);
 		caballeroBody.setUserData(this);

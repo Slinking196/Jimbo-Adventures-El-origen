@@ -13,14 +13,32 @@ public class TorretasLevel {
 		torretas = new ArrayList<Torreta>();
 	}
 	
-	public void agregarTorreta(Texture img, World world, float x, float y, float width, float height, float coolDown, String view) {
-		Torreta newTorreta = new Torreta(img, world, x, y, width, height, coolDown, view);
+	public void agregarTorreta(Texture img, float x, float y, float width, float height, float coolDown, String view) {
+		Torreta newTorreta = new Torreta(img, x, y, width, height, coolDown, view);
 		
 		torretas.add(newTorreta);
 	}
 	
+	public void setTorretasWorld(World world) {
+		Torreta aux;
+		 
+		for(int i = 0; i < torretas.size(); i++) {
+			aux = torretas.get(i);
+			aux.setTorretaWorld(world);
+		}
+	}
+	
 	public void agregarTorreta(Torreta newTorreta) {
 		torretas.add(newTorreta);
+	}
+	
+	public void removeBullet(Bullet bala) {
+		Torreta aux;
+		
+		for(int i = 0; i < torretas.size(); i++) {
+			aux = torretas.get(i);
+			aux.removeBullet(bala);
+		}
 	}
 	
 	public void update(float delta, World world) {
@@ -41,3 +59,4 @@ public class TorretasLevel {
 		}
 	}
 }
+

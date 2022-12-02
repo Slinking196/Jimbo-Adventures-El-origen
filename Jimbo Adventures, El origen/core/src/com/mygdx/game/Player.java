@@ -3,12 +3,9 @@ package com.mygdx.game;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public class Player {
-	private float WIDTH = 0.2f;
-	private float HEIGHT = 0.2f;
-	private float DRAW_WIDTH = 0.4f;
-	private float DRAW_HEIGHT = 0.4f;
-	private float WALK_SPEED = 3.0f;
+import Patrones.Entidad;
+
+public class Player extends Entidad {
 	private float JUMP_SPEED = 6.0f;
 	
 	private boolean isJump;
@@ -24,16 +21,21 @@ public class Player {
 	
 	private float stateTime = 0;
 	
-	private Vector2 pos;
-	private Vector2 velocidad;
+	private Vector2 initPos;
 	
 	public Player(float x, float y) {
-		pos =  new Vector2(x, y);
+		setPos(new Vector2(x, y));
+		initPos = new Vector2(x, y);
 	}
 	
+	@Override
 	public void update(Body body, float delta, float accelX) {
-		pos = body.getPosition();
-		velocidad = body.getLinearVelocity();
+		Vector2 velocidad;
+		
+		setPos(body.getPosition());
+		setVelocidad(body.getLinearVelocity());
+		
+		velocidad = getVelocidad();
 		
 		if(didJump) {
 			didJump = false;
@@ -43,11 +45,11 @@ public class Player {
 		}
 		
 		if(accelX == -1) {
-			velocidad.x = -WALK_SPEED;
+			velocidad.x = -1* getWalkSpeed();
 			isWalking = !isJump && !isFalling;
 		}
 		else if(accelX == 1) {
-			velocidad.x = WALK_SPEED;
+			velocidad.x = getWalkSpeed();
 			isWalking = !isJump && !isFalling;
 		} 
 		else {
@@ -71,6 +73,7 @@ public class Player {
 		
 		body.setLinearVelocity(velocidad);
 		stateTime += delta; 
+		
 	}
 	
 	public void viewDown() {
@@ -101,6 +104,10 @@ public class Player {
 		viewRight = false;
 	}
 	
+	public Vector2 getInitPos() {
+		return initPos;
+	}
+	
 	public boolean getViewDown() {
 		return viewDown;
 	}
@@ -115,28 +122,6 @@ public class Player {
 	
 	public boolean getViewLeft() {
 		return viewLeft;
-	}
-	
-	public float getPosY() {
-		return pos.y;
-	}
-	
-	public float getPosX() {
-		return pos.x;
-	}
-	
-	public float getDrawHeigth() {
-		return DRAW_HEIGHT;
-	}
-	public float getDrawWidth() {
-		return DRAW_WIDTH;
-	}
-	public float getHeight() {
-		return HEIGHT;
-	}
-	
-	public float getWidth() {
-		return WIDTH;
 	}
 	
 	public void jump() {

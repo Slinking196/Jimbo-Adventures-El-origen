@@ -1,19 +1,22 @@
 package com.mygdx.game;
 
-import java.io.*;
-
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 
-import Pantallas.Level1;
-import Pantallas.MenuPrincipal;
+import Patrones.Level;
+import Patrones.LevelBuilder;
+import Patrones.LevelCreator;
 
 public class JimboAdventures extends Game {
 	
+	@Override
 	public void create() {
-		setScreen(new MenuPrincipal(this));
+		LevelCreator creator = new LevelCreator();
+		LevelBuilder builder = new LevelBuilder();
+		
+		creator.createLevel1(builder, this);
+		
+		Level level1 = builder.getLevel();
+		
+		setScreen(level1);
 	}
-
 }

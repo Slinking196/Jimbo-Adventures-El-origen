@@ -13,10 +13,19 @@ public class ClanSombra {
 		caballeros = new ArrayList<Caballero>();
 	}
 	
-	public void agregarCaballero(Texture img, World world, float x, float y, float accelX, float limitInfX, float limitSupX) {
-		Caballero newCaballero = new Caballero(img, world, x, y, accelX, limitInfX, limitSupX);
+	public void agregarCaballero(Texture img, float x, float y, float accelX, float limitInfX, float limitSupX) {
+		Caballero newCaballero = new Caballero(img, x, y, accelX, limitInfX, limitSupX);
 		
 		caballeros.add(newCaballero);
+	}
+	
+	public void setCaballerosWorld(World world) {
+		Caballero aux;
+		
+		for(int i = 0; i < caballeros.size(); i++) {
+			aux = caballeros.get(i);
+			aux.setCaballeroWorld(world);
+		}
 	}
 	
 	public void agregarCaballero(Caballero newCaballero) {
@@ -45,3 +54,4 @@ public class ClanSombra {
 		}
 	}
 }
+

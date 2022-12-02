@@ -11,10 +11,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Bullet implements Dibujable{
+public class Bullet {
 	private final float WIDTH = 0.2f;
-	private final float HEIGHT = 0.04f;
-	private final float VELOCITY_MAX = 10.0f;
+	private final float HEIGHT = 0.1f;
+	private final float VELOCITY_MAX = 20.0f;
 	
 	private boolean right;
 	private boolean left;
@@ -31,10 +31,10 @@ public class Bullet implements Dibujable{
 		this.left = left;
 		this.up = up;
 		this.down = down;
-		createBody(x, y, world);
+		createBullet(x, y, world);
 	}
 	
-	public void createBody(float x, float y, World world) {
+	private void createBullet(float x, float y, World world) {
 		BodyDef bulletDef = new BodyDef();
 		bulletDef.position.set(x, y);
 		bulletDef.type = BodyType.DynamicBody;
@@ -62,10 +62,10 @@ public class Bullet implements Dibujable{
 	public void draw(SpriteBatch batch) {
 		Vector2 pos = bullet.getPosition();
 		
-		if(right) batch.draw(bulletImg, pos.x - WIDTH / 2.0f, pos.y - HEIGHT / 2.0f, WIDTH / 2.0f, HEIGHT / 2.0f, WIDTH, HEIGHT, 1, 1, 0);
-		if(up) batch.draw(bulletImg, pos.x - WIDTH / 2.0f, pos.y - HEIGHT / 2.0f, WIDTH / 2.0f, HEIGHT / 2.0f, WIDTH, HEIGHT, 1, 1, 90);
-		if(left) batch.draw(bulletImg, pos.x - WIDTH / 2.0f, pos.y - HEIGHT / 2.0f, WIDTH / 2.0f, HEIGHT / 2.0f, WIDTH, HEIGHT, 1, 1, 180);
-		if(down) batch.draw(bulletImg, pos.x - WIDTH / 2.0f, pos.y - HEIGHT / 2.0f, WIDTH / 2.0f, HEIGHT / 2.0f, WIDTH, HEIGHT, 1, 1, 270);
+		if(up) batch.draw(bulletImg, pos.x - HEIGHT / 2.0f, pos.y - WIDTH / 2.0f, HEIGHT / 2.0f, WIDTH / 2.0f, HEIGHT, WIDTH, 1, 1, 0);
+		if(left) batch.draw(bulletImg, pos.x - HEIGHT / 2.0f, pos.y - WIDTH / 2.0f, HEIGHT / 2.0f, WIDTH / 2.0f, HEIGHT, WIDTH, 1, 1, 90);
+		if(down) batch.draw(bulletImg, pos.x - HEIGHT / 2.0f, pos.y - WIDTH / 2.0f, HEIGHT / 2.0f, WIDTH / 2.0f, HEIGHT, WIDTH, 1, 1, 180);
+		if(right) batch.draw(bulletImg, pos.x - HEIGHT / 2.0f, pos.y - WIDTH / 2.0f, HEIGHT / 2.0f, WIDTH / 2.0f, HEIGHT, WIDTH, 1, 1, 270);
 	}
 
 	public void setHit(boolean hit) {

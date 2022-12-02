@@ -13,10 +13,19 @@ public class Superficies {
 		obstaculos = new ArrayList<Obstaculo>();
 	}
 	
-	public void agregarSuperficie(Texture img, World world, int tipo, float x, float y, float width, float hieght) {
-		Obstaculo newObstaculo = new Obstaculo(img, world, tipo, x, y, width, hieght);
+	public void agregarSuperficie(Texture img, int tipo, float x, float y, float width, float hieght) {
+		Obstaculo newObstaculo = new Obstaculo(img, tipo, x, y, width, hieght);
 		
 		obstaculos.add(newObstaculo);
+	}
+	
+	public void setSuperficiesWorld(World world) {
+		Obstaculo aux;
+		
+		for(int i = 0; i < obstaculos.size(); i++) {
+			aux = obstaculos.get(i);
+			aux.setObstaculoWorld(world);
+		}
 	}
 	
 	public void agregarSuperficie(Obstaculo obs) {
