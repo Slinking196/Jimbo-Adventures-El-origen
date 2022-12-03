@@ -11,7 +11,9 @@ import com.mygdx.game.Collision;
 import com.mygdx.game.Consumibles;
 import com.mygdx.game.Item;
 import com.mygdx.game.JimboAdventures;
+import com.mygdx.game.Snake;
 import com.mygdx.game.Superficies;
+import com.mygdx.game.Tail;
 import com.mygdx.game.TorretasLevel;
 import com.mygdx.game.Bullet;
 
@@ -20,6 +22,7 @@ import Utils.Screens;
 public class Level extends Screens {
 	private World world;
 	private Jimbo jimbo;
+	private Snake snake;
 	private Consumibles consu;
 	private ClanSombra clan;
 	private Superficies sup;
@@ -27,7 +30,7 @@ public class Level extends Screens {
 	private TextureRegion fondo;
 	private Box2DDebugRenderer renderer;
 	
-	public Level(JimboAdventures game, World world, Jimbo jimbo ,Consumibles consu, ClanSombra clan, Superficies sup,
+	public Level(JimboAdventures game, World world, Jimbo jimbo, Snake snake, Consumibles consu, ClanSombra clan, Superficies sup,
 			TorretasLevel torretas, TextureRegion fondo) {
 		
 		super(game);
@@ -38,6 +41,7 @@ public class Level extends Screens {
 		this.torretas = torretas;
 		this.fondo = fondo;
 		this.jimbo = jimbo;
+		this.snake = snake;
 		
 		world.setContactListener(new Collision());
 		renderer = new Box2DDebugRenderer();
@@ -74,11 +78,12 @@ public class Level extends Screens {
 		
 		getBatch().begin();
 		getBatch().draw(fondo, 0 - 7.0f, -1, 4.0f , 5.0f, 15.0f, 11.0f, 1, 1, 0);
-		sup.draw(getBatch());
-		consu.draw(getBatch());
-		torretas.draw(getBatch());
-		clan.draw(getBatch());
-		if(!jimbo.isDead()) jimbo.draw(getBatch());
+		if(sup != null) sup.draw(getBatch());
+		if(consu != null) consu.draw(getBatch());
+		if(torretas != null)torretas.draw(getBatch());
+		if(clan != null) clan.draw(getBatch());
+		if(snake != null) snake.draw(getBatch());
+		if(jimbo != null && !jimbo.isDead()) jimbo.draw(getBatch());
 		getBatch().end();
 		
 		renderer.render(world, getCamBox2D().combined);
@@ -109,8 +114,8 @@ public class Level extends Screens {
 			if(body.getUserData() instanceof Bullet) {
 				Bullet bull = (Bullet) body.getUserData();
 				if(bull.getHit()) {
-					torretas.removeBullet(bull);
-					jimbo.removeBullet(bull);
+					if(torretas != null) torretas.removeBullet(bull);
+					if(jimbo != null) jimbo.removeBullet(bull);
 					bodies.removeValue(body, true);
 					world.destroyBody(body);
 				}
@@ -118,7 +123,7 @@ public class Level extends Screens {
 			if(body.getUserData() instanceof Caballero) {
 				Caballero enemy = (Caballero) body.getUserData();
 				if(enemy.getHit()) {
-					clan.removeGuardian(enemy);
+					if(clan != null) clan.removeGuardian(enemy);
 					bodies.removeValue(body, true);
 					world.destroyBody(body);
 				}
@@ -128,8 +133,7 @@ public class Level extends Screens {
 				
 				if(item.getHit()) {
 					if(item.getTipo() == 1) {
-						System.out.println("xd");
-						jimbo.takeBullet();
+						if(jimbo != null) jimbo.takeBullet();
 					}
 					if(item.getTipo() == 2) jimbo.drinkPotion();
 					bodies.removeValue(body, true);
@@ -139,8 +143,8 @@ public class Level extends Screens {
 			}
 		}
 		
-		clan.update(delta, world);
-		torretas.update(delta, world);
-		if(!jimbo.isDead()) jimbo.update(delta, world);
+		if(clan != null) clan.update(delta, world);
+		if(torretas != null) torretas.update(delta, world);
+		if(jimbo != null && !jimbo.isDead()) jimbo.update(delta, world);
 	}
 }

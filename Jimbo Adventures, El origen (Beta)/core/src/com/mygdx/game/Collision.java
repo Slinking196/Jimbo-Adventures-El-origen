@@ -144,6 +144,34 @@ public class Collision implements ContactListener {
 			
 			bull.setHit(true);
 		}
+		
+		if(bodyB.getUserData() instanceof Tail && bodyA.getUserData() instanceof Jimbo) {
+			Jimbo jimbo = (Jimbo) bodyA.getUserData();
+			
+			jimbo.setHit(true);
+		}
+		
+		if(bodyB.getUserData() instanceof Jimbo && bodyA.getUserData() instanceof Tail) {
+			Jimbo jimbo = (Jimbo) bodyB.getUserData();
+			
+			jimbo.setHit(true);
+		}
+		
+		if(bodyB.getUserData() instanceof Bullet && bodyA.getUserData() instanceof Tail) {
+            Bullet bull = (Bullet) bodyB.getUserData();
+            Tail tail = (Tail) bodyA.getUserData();
+
+            tail.hit();
+            bull.setHit(true);
+        }
+		
+		if(bodyB.getUserData() instanceof Tail && bodyA.getUserData() instanceof Bullet) {
+            Bullet bull = (Bullet) bodyA.getUserData();
+            Tail tail = (Tail) bodyB.getUserData();
+
+            tail.hit();
+            bull.setHit(true);
+        }
 	}
 
 	@Override

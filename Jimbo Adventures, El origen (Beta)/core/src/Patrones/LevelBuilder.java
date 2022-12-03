@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.ClanSombra;
 import com.mygdx.game.Consumibles;
 import com.mygdx.game.JimboAdventures;
+import com.mygdx.game.Snake;
 import com.mygdx.game.Superficies;
 import com.mygdx.game.TorretasLevel;
 
@@ -61,6 +62,12 @@ public class LevelBuilder implements Builder {
 		this.game = game;
 	}
 	
+	@Override
+	public void setSnake(Snake snake) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public void setObjectsWorld() {
 		jimbo.setPlayerWorld(world);
 		consu.setItemsWorld(world);
@@ -72,7 +79,7 @@ public class LevelBuilder implements Builder {
 	public Level getLevel() {
 		
 		setObjectsWorld();
-		return new Level(game, world, jimbo, consu, clan, sup, torretas, fondo);
+		return new Level(game, world, jimbo, null, consu, clan, sup, torretas, fondo);
 	}
 
 }

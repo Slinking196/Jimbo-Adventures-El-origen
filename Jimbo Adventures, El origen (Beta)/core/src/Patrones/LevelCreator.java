@@ -13,6 +13,7 @@ import com.mygdx.game.Consumibles;
 import com.mygdx.game.Item;
 import com.mygdx.game.JimboAdventures;
 import com.mygdx.game.Obstaculo;
+import com.mygdx.game.Snake;
 import com.mygdx.game.Superficies;
 import com.mygdx.game.Torreta;
 import com.mygdx.game.TorretasLevel;
@@ -50,7 +51,7 @@ public class LevelCreator {
 		builder.setGame(game);
 	}
 	
-	public void createLevel3(Builder builder, JimboAdventures game) {
+	/*public void createLevel3(Builder builder, JimboAdventures game) {
 		try {
 			builder.setConsumibles(leerItems("Csv\\Level3"));
 			builder.setClanSombra(leerEnemigos("Csv\\\\Level3"));
@@ -64,22 +65,23 @@ public class LevelCreator {
 		builder.setWorld(new World(new Vector2(0,-13f), true));
 		builder.setFondo(new Texture("Paisaje 1.png"));
 		builder.setGame(game);
-	}
+	}*/
 	
 	public void createFinalLevel(Builder builder, JimboAdventures game) {
+		World world = new World(new Vector2(0,-20f), true);
+		
+		builder.setWorld(world);
+		builder.setSnake(new Snake(0, 4, new Texture("Snake.png"), world));
+		builder.setJimbo(Jimbo.getInstance(new Texture("Parado.png"), -6.5f, 2.0f), -6.5f, 2.0f);
+		builder.setFondo(new Texture("Paisaje 1.png"));
+		builder.setGame(game);
 		try {
 			builder.setConsumibles(leerItems("Csv\\FinalLevel"));
-			builder.setClanSombra(leerEnemigos("Csv\\\\FinalLevel"));
 			builder.setSuperficies(leerObstaculos("Csv\\FinalLevel"));
-			builder.setTorretas(leerTorretas("Csv\\FinalLevel"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		builder.setWorld(new World(new Vector2(0,-13f), true));
-		builder.setFondo(new Texture("Paisaje 1.png"));
-		builder.setGame(game);
 	}
 	
 	public TorretasLevel leerTorretas(String archivo) throws IOException {

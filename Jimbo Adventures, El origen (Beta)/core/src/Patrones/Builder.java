@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.ClanSombra;
 import com.mygdx.game.Consumibles;
 import com.mygdx.game.JimboAdventures;
+import com.mygdx.game.Snake;
 import com.mygdx.game.Superficies;
 import com.mygdx.game.TorretasLevel;
 
@@ -17,4 +18,5 @@ public interface Builder {
 	public void setFondo(Texture img);
 	public void setJimbo(Jimbo jimbo, float x, float y);
 	public void setGame(JimboAdventures game);
+	public void setSnake(Snake snake);
 }
