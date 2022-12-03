@@ -14,12 +14,8 @@ public class Enemigo extends Entidad {
 	}
 	
 	@Override
-	public void update(Body body, float delta, float accelX) {
-		Vector2 velocidad;
-		
-		setPos(body.getPosition());
-		setVelocidad(body.getLinearVelocity());
-		velocidad = getVelocidad();
+	public void movimientoHorizontal(Body body, float delta, float accelX) {
+		Vector2 velocidad = body.getLinearVelocity();
 		
 		if(accelX == -1) {
 			velocidad.x = -1 * getWalkSpeed();
@@ -29,12 +25,41 @@ public class Enemigo extends Entidad {
 		}
 		
 		this.accelX = accelX;
-		body.setLinearVelocity(velocidad);
-		
 	}
+
+	@Override
+	public void movimientoVertical(Body body, float delta, float accelX) {}
 	
 	public float getAccelX() {
 		return accelX;
 	}
-	
+
+	@Override
+	public void viewLeft() {}
+
+	@Override
+	public void viewRight() {}
+
+	@Override
+	public void viewUp() {}
+
+	@Override
+	public void viewDown() {}
+
+	@Override
+	public void jump() {}
+
+	@Override
+	public boolean getViewUp() {return false;}
+	@Override
+	public boolean getViewLeft() {return false;}
+
+	@Override
+	public boolean getViewRight() {return false;}
+
+	@Override
+	public boolean getViewDown() {return false;}
+
+	@Override
+	public Vector2 getInitPos() {return null;}
 }

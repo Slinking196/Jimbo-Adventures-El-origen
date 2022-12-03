@@ -6,18 +6,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import Patrones.Entidad;
 
 public class Player extends Entidad {
-	private float JUMP_SPEED = 6.0f;
-	
-	private boolean isJump;
-	private boolean isFalling;
-	private boolean isWalking;
-	
 	private boolean viewUp = false;
 	private boolean viewDown = false;
 	private boolean viewLeft = false;
 	private boolean viewRight = true;
-	
-	private boolean didJump;
 	
 	private float stateTime = 0;
 	
@@ -29,51 +21,38 @@ public class Player extends Entidad {
 	}
 	
 	@Override
-	public void update(Body body, float delta, float accelX) {
-		Vector2 velocidad;
-		
-		setPos(body.getPosition());
-		setVelocidad(body.getLinearVelocity());
-		
-		velocidad = getVelocidad();
-		
-		if(didJump) {
-			didJump = false;
-			isJump = true;
-			stateTime = 0;
-			velocidad.y = JUMP_SPEED;
-		}
+	public void movimientoHorizontal(Body body, float delta, float accelX) {
+		Vector2 velocidad = getVelocidad();
 		
 		if(accelX == -1) {
 			velocidad.x = -1* getWalkSpeed();
-			isWalking = !isJump && !isFalling;
+			setIsWalking(!getIsJump() && !getIsFalling());
 		}
 		else if(accelX == 1) {
 			velocidad.x = getWalkSpeed();
-			isWalking = !isJump && !isFalling;
+			setIsWalking(!getIsJump() && !getIsFalling());
 		} 
 		else {
 			velocidad.x = 0;
-			isWalking = false;
+			setIsWalking(false);
 		}
+	}
+
+	@Override
+	public void movimientoVertical(Body body, float delta, float accelX) {
+		Vector2 velocidad = getVelocidad();
 		
-		if(isJump) {
+		if(getIsJump()) {
 			if(velocidad.y <= 0) {
-				isJump = false;
-				isFalling = true;
-				stateTime = 0;
+				isFalling(true);
 			}
 		} 
-		else if(isFalling) {
+		else if(getIsFalling()) {
 			if(velocidad.y >= 0) {
-				isFalling = false;
+				isFalling(false);
 				stateTime = 0;
 			}
 		}
-		
-		body.setLinearVelocity(velocidad);
-		stateTime += delta; 
-		
 	}
 	
 	public void viewDown() {
@@ -125,8 +104,11 @@ public class Player extends Entidad {
 	}
 	
 	public void jump() {
-		if(!isJump && !isFalling) {
-			didJump = true;
+		if(!isJump()) {
+			setDidJump(true);
 		}
 	}
+
+	@Override
+	public float getAccelX() {return 0;}
 }

@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class Bullet {
 	private final float WIDTH = 0.2f;
 	private final float HEIGHT = 0.1f;
-	private final float VELOCITY_MAX = 20.0f;
+	private final float VELOCITY_MAX = 15.0f;
 	
 	private boolean right;
 	private boolean left;

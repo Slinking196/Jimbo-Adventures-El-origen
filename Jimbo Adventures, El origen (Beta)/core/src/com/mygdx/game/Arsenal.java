@@ -42,8 +42,8 @@ public class Arsenal {
 		
 		if(viewRight) newBullet = new Bullet(img, world, x + width + 0.3f, y, viewRight, viewLeft, viewUp, viewDown);
 		else if(viewLeft) newBullet = new Bullet(img, world, x - width / 2.0f - 0.3f, y, viewRight, viewLeft, viewUp, viewDown);
-		else if(viewUp) newBullet = new Bullet(img, world, x, y + height + 0.3f, viewRight, viewLeft, viewUp, viewDown);
-		else newBullet = new Bullet(img, world, x, y - 0.4f, viewRight, viewLeft, viewUp, viewDown);
+		else if(viewUp) newBullet = new Bullet(img, world, x, y + height + 0.5f, viewRight, viewLeft, viewUp, viewDown);
+		else newBullet = new Bullet(img, world, x, y - 0.55f, viewRight, viewLeft, viewUp, viewDown);
 		
 		balas.add(newBullet);
 		

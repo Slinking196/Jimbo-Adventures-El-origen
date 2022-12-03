@@ -23,7 +23,7 @@ public class Jimbo {
 	private boolean hit;
 	private boolean isDead = false;
 	private Arsenal balas;
-	private Player player;
+	private Entidad player;
 	private Body jimboBody;
 	private TextureRegion jimboImg;
 	private BodyDef jimboDef;
@@ -59,83 +59,97 @@ public class Jimbo {
 	}
 	
 	public void setPlayerWorld(World world) {
-		jimboBody = world.createBody(jimboDef);
-		jimboBody.createFixture(fixDef);
-		jimboBody.setUserData(this);
-		
-		shape.dispose();
+		if(instance != null) {
+			jimboBody = world.createBody(jimboDef);
+			jimboBody.createFixture(fixDef);
+			jimboBody.setUserData(this);
+			
+			shape.dispose();
+		}
 	}
 	
 	public void update(float delta, World world) {
-		float accelX = 0;
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-			player.viewLeft();
-			accelX = -1;
+		if(instance != null) {
+			float accelX = 0;
+			
+			if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+				player.viewLeft();
+				accelX = -1;
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+				player.viewRight();
+				accelX = 1;
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.W)) player.viewUp();
+			if(Gdx.input.isKeyPressed(Input.Keys.S)) player.viewDown();
+			if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) player.jump();
+			if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && cantBalas > 0) {
+				balas.agregarBala(new Texture("Bala.png"), world, jimboBody.getPosition().x, jimboBody.getPosition().y, player.getWidth(), player.getHeight(),
+									player.getViewRight(), player.getViewLeft(), player.getViewUp(), player.getViewDown());
+				cantBalas--;
+			}
+			
+			player.update(jimboBody, delta, accelX);
+			jimboBody.setTransform(jimboBody.getPosition(), 0);
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-			player.viewRight();
-			accelX = 1;
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.W)) player.viewUp();
-		if(Gdx.input.isKeyPressed(Input.Keys.S)) player.viewDown();
-		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) player.jump();
-		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && cantBalas > 0) {
-			balas.agregarBala(new Texture("Bala.png"), world, jimboBody.getPosition().x, jimboBody.getPosition().y, player.getWidth(), player.getHeight(),
-								player.getViewRight(), player.getViewLeft(), player.getViewUp(), player.getViewDown());
-			cantBalas--;
-		}
-		
-		player.update(jimboBody, delta, accelX);
-		jimboBody.setTransform(jimboBody.getPosition(), 0);
 	}
 	
 	public void goToInitPos() {
-		jimboBody.setTransform(player.getInitPos(), 0);
+		if(instance != null) jimboBody.setTransform(player.getInitPos(), 0);
 	}
 	
 	public void removeBullet(Bullet bala) {
-		balas.removeBala(bala);
+		if(instance != null) balas.removeBala(bala);
 	}
 	
 	public void setInitPos(float x, float y) {
-		player.setPos(new Vector2(x, y));
+		if(instance != null) player.setPos(new Vector2(x, y));
 	}
 	
 	public void dead() {
-		isDead = true;
+		if(instance != null) isDead = true;
 	}
 	
 	public boolean isDead() {
-		return isDead;
+		if(instance != null) return isDead;
+		
+		return false;
 	}
 	
 	public int getHealth() {
-		return health;
+		if(instance != null) return health;
+		
+		return 0;
 	}
 	
 	public void setHit(boolean hit) {
-		this.hit = hit;
-		
-		if(hit) health--;
+		if(instance != null) {
+			this.hit = hit;
+			
+			if(hit) health--;
+		}
 	}
 	
 	public void takeBullet() {
-		cantBalas++;
+		if(instance != null) cantBalas++;
 	}
 	
 	public void drinkPotion() {
-		health++;
+		if(instance != null) health++;
 	}
 	
 	public boolean getHit() {
-		return hit;
+		if(instance != null) return hit;
+		
+		return false;
 	}
 	
 	public void draw(SpriteBatch batch) {
-		Vector2 pos = jimboBody.getPosition();
-		
-		balas.draw(batch);
-		batch.draw(jimboImg, pos.x - 0.2f, pos.y - 0.2f, .2f, 0.2f, player.getDrawWidth(), player.getDrawHeigth(), 1, 1, 0);
+		if(instance != null) {
+			Vector2 pos = jimboBody.getPosition();
+			
+			balas.draw(batch);
+			batch.draw(jimboImg, pos.x - 0.2f, pos.y - 0.2f, .2f, 0.2f, player.getDrawWidth(), player.getDrawHeigth(), 1, 1, 0);
+		}
 	}
 }

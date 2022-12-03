@@ -19,7 +19,7 @@ import com.mygdx.game.TorretasLevel;
 
 public class LevelCreator {
 	public void createLevel1(Builder builder, JimboAdventures game) {
-		builder.setWorld(new World(new Vector2(0,-13f), true));
+		builder.setWorld(new World(new Vector2(0,-20f), true));
 		builder.setFondo(new Texture("Paisaje 1.png"));
 		builder.setGame(game);
 		builder.setJimbo(Jimbo.getInstance(new Texture("Parado.png"), -6.5f, 2.0f), -6.5f, 2.0f);
