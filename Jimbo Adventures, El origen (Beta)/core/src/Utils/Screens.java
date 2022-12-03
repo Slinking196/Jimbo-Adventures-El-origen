@@ -72,10 +72,6 @@ public abstract class Screens extends InputAdapter implements Screen {
 		return camUI;
 	}
 	
-	public void dispose() {
-		
-	}
-	
 	public abstract void draw(float delta);
 	
 	public abstract void update(float delta); 

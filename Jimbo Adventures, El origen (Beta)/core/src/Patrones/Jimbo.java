@@ -18,8 +18,8 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Jimbo {
 	private static Jimbo instance;
-	private int health = 3;
-	private int cantBalas = 200;
+	private int health = 20;
+	private int cantBalas = 20;
 	private boolean hit;
 	private boolean isDead = false;
 	private Arsenal balas;
@@ -34,7 +34,6 @@ public class Jimbo {
 		jimboImg = new TextureRegion(img);
 		player = new Player(x, y);
 		balas = new Arsenal();
-		createBody();
 	}
 	
 	public static Jimbo getInstance(Texture img, float x, float y) {
@@ -45,7 +44,7 @@ public class Jimbo {
 		return instance;
 	}
 	
-	private void createBody() {
+	public void createBody() {
 		jimboDef = new BodyDef();
 		jimboDef.position.set(player.getPosX(), player.getPosY());
 		jimboDef.type = BodyType.DynamicBody;
@@ -94,6 +93,14 @@ public class Jimbo {
 		}
 	}
 	
+	public void setBalas(int balas) {
+		this.cantBalas = balas;
+	}
+	
+	public void setVidas(int health) {
+		this.health = health;
+	}
+	
 	public void goToInitPos() {
 		if(instance != null) jimboBody.setTransform(player.getInitPos(), 0);
 	}
@@ -122,12 +129,22 @@ public class Jimbo {
 		return 0;
 	}
 	
+	public int getCantBalas() {
+		if(instance != null) return cantBalas;
+		
+		return 0;
+	}
+	
 	public void setHit(boolean hit) {
 		if(instance != null) {
 			this.hit = hit;
 			
 			if(hit) health--;
 		}
+	}
+	
+	public void setIsDead(boolean isDead) {
+		this.isDead= isDead;
 	}
 	
 	public void takeBullet() {

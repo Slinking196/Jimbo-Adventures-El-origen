@@ -1,5 +1,7 @@
 package Patrones;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
@@ -10,10 +12,14 @@ import com.mygdx.game.Snake;
 import com.mygdx.game.Superficies;
 import com.mygdx.game.TorretasLevel;
 
+import Utils.LevelType;
+
 public class LevelBuilder implements Builder {
 	private JimboAdventures game;
+	private Music levelMusic;
 	private World world;
 	private Jimbo jimbo;
+	private LevelType lvlType;
 	private Consumibles consu;
 	private ClanSombra clan;
 	private Superficies sup;
@@ -21,9 +27,25 @@ public class LevelBuilder implements Builder {
 	private TextureRegion fondo;
 	
 	@Override
-	public void setJimbo(Jimbo jimbo, float x, float y) {
+	public void setJimbo(Jimbo jimbo, float x, float y, int health, int balas) {
 		this.jimbo = jimbo;
+		this.jimbo.createBody();
 		this.jimbo.setInitPos(x, y);
+		this.jimbo.setBalas(balas);
+		this.jimbo.setVidas(health);
+	}
+	
+	@Override
+	public void setLevelType(LevelType lvlType) {
+		this.lvlType = lvlType;
+		
+	}
+	
+	@Override
+	public void setMusic(String name) {
+		levelMusic = Gdx.audio.newMusic(Gdx.files.internal(name));
+		levelMusic.setLooping(true);
+		levelMusic.setVolume(0.5f);
 	}
 	
 	@Override
@@ -79,7 +101,7 @@ public class LevelBuilder implements Builder {
 	public Level getLevel() {
 		
 		setObjectsWorld();
-		return new Level(game, world, jimbo, null, consu, clan, sup, torretas, fondo);
+		return new Level(game, world, jimbo, null, levelMusic, consu, clan, sup, lvlType, torretas, fondo);
 	}
 
 }

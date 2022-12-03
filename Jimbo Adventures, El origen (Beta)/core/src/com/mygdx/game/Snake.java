@@ -17,6 +17,7 @@ public class Snake {
 	private final int right = -2;
 	private final int stop = 0;
 	
+	private boolean isDead = false;
 	private int vidas = 3;
 	private int dir;
 	private float vel = 10; //Del 1 al 100
@@ -97,7 +98,14 @@ public class Snake {
 		if(vidas == 1) {
 			body.setStrategySnakeAttack(new HardSnakeAttack());
 		}
+		if(vidas == 0) {
+			isDead = true;
+		}
 		return !tieneVidas();
+	}
+	
+	public boolean isDead() {
+		return isDead;
 	}
 	
 	public void darVida() {

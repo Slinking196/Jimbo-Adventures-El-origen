@@ -18,12 +18,16 @@ import com.mygdx.game.Superficies;
 import com.mygdx.game.Torreta;
 import com.mygdx.game.TorretasLevel;
 
+import Utils.LevelType;
+
 public class LevelCreator {
 	public void createLevel1(Builder builder, JimboAdventures game) {
 		builder.setWorld(new World(new Vector2(0,-20f), true));
 		builder.setFondo(new Texture("Paisaje 1.png"));
+		builder.setJimbo(Jimbo.getInstance(new Texture("Parado.png"), -6.5f, 2.0f), -6.5f, 2.0f, 3, 0);
+		builder.setMusic("Boss 2 Aaron's Remix (Terraria).wav");
+		builder.setLevelType(LevelType.LEVEL_1);
 		builder.setGame(game);
-		builder.setJimbo(Jimbo.getInstance(new Texture("Parado.png"), -6.5f, 2.0f), -6.5f, 2.0f);
 		try {
 			builder.setConsumibles(leerItems("Csv\\Level1"));
 			builder.setClanSombra(leerEnemigos("Csv\\\\Level1"));
@@ -36,6 +40,12 @@ public class LevelCreator {
 	}
 	
 	public void createLevel2(Builder builder, JimboAdventures game) {
+		builder.setWorld(new World(new Vector2(0,-16f), true));
+		builder.setFondo(new Texture("Level2.png"));
+		builder.setJimbo(Jimbo.getInstance(new Texture("Parado.png"), -6.5f, 2.0f), -6.5f, 2.0f, 4, 0);
+		builder.setMusic("Boss 2 Aaron's Remix (Terraria).wav");
+		builder.setLevelType(LevelType.LEVEL_2);
+		builder.setGame(game);
 		try {
 			builder.setConsumibles(leerItems("Csv\\Level2"));
 			builder.setClanSombra(leerEnemigos("Csv\\\\Level2"));
@@ -45,36 +55,18 @@ public class LevelCreator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		builder.setWorld(new World(new Vector2(0,-13f), true));
-		builder.setFondo(new Texture("Paisaje 1.png"));
-		builder.setGame(game);
 	}
-	
-	/*public void createLevel3(Builder builder, JimboAdventures game) {
-		try {
-			builder.setConsumibles(leerItems("Csv\\Level3"));
-			builder.setClanSombra(leerEnemigos("Csv\\\\Level3"));
-			builder.setSuperficies(leerObstaculos("Csv\\Level3"));
-			builder.setTorretas(leerTorretas("Csv\\Level3"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		builder.setWorld(new World(new Vector2(0,-13f), true));
-		builder.setFondo(new Texture("Paisaje 1.png"));
-		builder.setGame(game);
-	}*/
 	
 	public void createFinalLevel(Builder builder, JimboAdventures game) {
 		World world = new World(new Vector2(0,-20f), true);
 		
 		builder.setWorld(world);
 		builder.setSnake(new Snake(0, 4, new Texture("Snake.png"), world));
-		builder.setJimbo(Jimbo.getInstance(new Texture("Parado.png"), -6.5f, 2.0f), -6.5f, 2.0f);
-		builder.setFondo(new Texture("Paisaje 1.png"));
+		builder.setFondo(new Texture("FinalLevel.png"));
+		builder.setJimbo(Jimbo.getInstance(new Texture("Parado.png"), -6.5f, 2.0f), -6.5f, 2.0f, 4, 2);
 		builder.setGame(game);
+		builder.setMusic("FinalBoss.wav");
+		builder.setLevelType(LevelType.FINAL_LEVEL);
 		try {
 			builder.setConsumibles(leerItems("Csv\\FinalLevel"));
 			builder.setSuperficies(leerObstaculos("Csv\\FinalLevel"));
